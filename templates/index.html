@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="css/base.css">
+{% extends 'bootstrap/base.html' %}'
+
+{% block content %}
+
+<section id="intro-header">
+    <div class="container" class="panel panel-default">
+        <div class="row">
+            <img class="center-block" src="imgs/icon_circle.png" width="200px" height="200px"/>
+        </div>
+    </div>
+</section>
+<nav class="navbar bavbar-default">
+
+<div class="navbar-collapse collapse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"><img src="imgs/icon_circle.png" width="40px" height="40px"/></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">SuperBeginner</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Learn Python<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Write Your First Program</a></li>
+                        <li><a href="#">If statement</a></li>
+                        <li><a href="#">Loops</a></li>
+                        <li><a href="#">Functions</a></li>
+                        <li><a href="#">Using libraries</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="./">About us<span class="sr-only">(current)</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</nav>
+
+<section id="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img class="img-responsive center-block" src="imgs/icon_circle.png" width="200px" height="200px"/>
+            </div>
+                <div class="col-md-6">
+                    <h3>Super Beginner</h3>
+                    <p> Something exciting about learning python with some exercises</p>
+                </div>
+
+
+        </div>
+    </div>
+</section>
+<section id="feature">
+    <div class="container">
+        <div class="row">
+
+                <div class="col-md-6">
+                    <img class="img-responsive center-block" src="imgs/icon_circle.png" width="200px" height="200px"/>
+                </div>
+                <div class="col-md-6 align-self-center">
+                    <h3> Why learning programming?</h3>
+                    <p> Something exciting about learning python with some exercises</p>
+                </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img class="img-responsive center-block" src="imgs/icon_circle.png" width="200px" height="200px"/>
+
+            </div>
+            <div class="col-sm-6">
+                <h3>Practice, practice, practice</h3>
+                <p> Something exciting about learning python with some exercises</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img class="img-responsive center-block" src="imgs/icon_circle.png" width="200px" height="200px"/>
+
+            </div>
+            <div class="col-sm-6">
+                <h3> Get ready for interviews </h3>
+                <p> Something exciting about learning python with some exercises</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

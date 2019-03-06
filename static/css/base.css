@@ -1,0 +1,29 @@
+header {
+  background-color: white;
+}
+
+header ul {
+  margin: 0;
+}
+
+header a,
+header li {
+  padding: 1.4rem 0;
+  color: #777;
+  font-weight: bold;
+}
+
+section#intro-header {
+  #background-size: cover;
+  background-color: #3684d7;
+  color: white;
+}
+section .row {
+    margin: 10px;
+}
+
+.container h3 {
+    color: #3684d7;
+}
+
+
