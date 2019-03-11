@@ -20,5 +20,9 @@ def serve_css(filename):
 def serve_imgs(filename):
     return send_from_directory('static/imgs', filename)
 
+@app.route('/<path:filename>')
+def send_html(filename):
+    return render_template(filename)
+
 if __name__ == '__main__':
     app.run(debug=True)
