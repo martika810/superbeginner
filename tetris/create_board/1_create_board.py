@@ -1,27 +1,22 @@
 import pygame, sys
-from pygame.locals import *
+from pygame.locals import QUIT,KEYUP,K_ESCAPE
 
-def main():
-    pygame.init()
-    DISPLAYSURF = pygame.display.set_mode((640, 480))
-    pygame.display.set_caption('Tetromino')
+def run_tetris_game():
+    pygame.init()  # start the game engine
+    window_size = (640, 480)
+    screen = pygame.display.set_mode(window_size) # create a window
+    clock = pygame.time.Clock()
+    pygame.display.set_caption('My tetris') # give title to the window
     while True:
-        DISPLAYSURF.fill((  0,   0,   0))
+        screen.fill((  0,   0,   0))
         pygame.display.update()
-        checkForQuit()
-
-def checkForQuit():
-    for event in pygame.event.get(QUIT): # get all the QUIT events
-        pygame.quit()
-        sys.exit() # terminate if any QUIT events are present
-    for event in pygame.event.get(KEYUP): # get all the KEYUP events
-        if event.key == K_ESCAPE:
+        for event in pygame.event.get(QUIT):
             pygame.quit()
-            sys.exit() # terminate if the KEYUP event was for the Esc key
-        pygame.event.post(event) # put the other KEYUP event objects back
+            sys.exit() # terminate if any QUIT events are present
+        clock.tick(60)
 
-if __name__ == '__main__':
-    main()
+
+run_tetris_game()
 
 
 
