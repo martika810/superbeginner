@@ -1,49 +1,84 @@
-import pygame, sys
-from pygame.locals import *
-BLUE        = (  0,   0, 155)
+import pygame, sys, time
+from pygame.locals import QUIT
+BLUE = (  0,   0, 155)
 BOX_SIZE = 20
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 BOARD_WIDTH = 10
-BOARD_HEIGHT = 20
-X_MARGIN = int((SCREEN_WIDTH - BOARD_WIDTH * BOX_SIZE) / 2)
-TOP_MARGIN = SCREEN_HEIGHT - (BOARD_HEIGHT * BOX_SIZE) - 5
+
 def run_tetris_game():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption('Tetromino')
+    pygame.display.set_caption('My Tetris')
+    clock = pygame.time.Clock()
+    start= time.time()
     game_matrix = create_game_matrix()
+    last_move = start
+    piece = create_piece()
     while True:
         screen.fill((  0,   0,   0))
+        if(time.time()-last_move > 1):
+            print('Move down')
+            last_move = time.time()
+            move_piece_down(piece)
 
-        pygame.draw.rect(screen, BLUE, (X_MARGIN - 3, TOP_MARGIN - 7, (BOARD_WIDTH * BOX_SIZE) + 8, (BOARD_HEIGHT * BOX_SIZE) + 8), 5)
-        for col in range(BOARD_WIDTH):
-            for row in range(BOARD_HEIGHT):
-                if(game_matrix[row][col] != '.'):
-                    pygame.draw.rect(screen, (255,255,255),9*20+X_MARGIN)
+        draw_piece(screen, piece)
+        pygame.draw.rect(
+            screen,
+            BLUE,
+            [100, 50, 10*20, 20*20-10], 5)
 
+
+        draw_board(screen,game_matrix)
         pygame.display.update()
+
+        if(piece['x']>18 or game_matrix[piece['x']+1][piece['y']]!='.'):
+            game_matrix = update_game_matrix(game_matrix,piece['x'],piece['y'])
+            piece = create_piece()
         for event in pygame.event.get(QUIT):
             pygame.quit()
             sys.exit()
 
-def add_one_piece(board):
-    board[9][1] = (255,255,255)
+def create_piece():
+    piece = {}
+    piece['x'] = 0
+    piece['y'] = 4
+    return piece
+def move_piece_down(piece):
+    piece['x'] = piece['x']+1
 
+def draw_piece(screen, piece):
+    draw_single_tetris_box(screen,piece['x'],piece['y'],(255,255,255), (217, 222, 226))
+
+def draw_board(screen,matrix):
+    game_matrix_columns = 10
+    game_matrix_rows = 20
+    for row in range(game_matrix_rows):
+        for column in range(game_matrix_columns):
+            if(matrix[row][column]!='.'):
+                draw_single_tetris_box(screen,column,row,(255,255,255), (217, 222, 226))
+
+def draw_single_tetris_box(screen, matrix_cell_row, matrix_cell_column,color,shadow_color):
+    origin_x = 100 + 5 +(matrix_cell_column*20+1)
+    origin_y = 50 + 5 + (matrix_cell_row*20+1)
+    pygame.draw.rect(screen, shadow_color, [origin_x, origin_y, 20, 20])
+    pygame.draw.rect(screen, color,[origin_x, origin_y,18,18])
+
+def update_game_matrix(matrix,matrix_cell_column,matrix_cell_row):
+    print("matrix_cell_column="+str(matrix_cell_column))
+    print("matrix_cell_row="+str(matrix_cell_row))
+    matrix[matrix_cell_column][matrix_cell_row] = 'c'
+    return matrix
 
 def create_game_matrix():
     game_matrix_columns = 10
     game_matrix_rows = 20
     board = []
-    for column in range(game_matrix_columns):
-        column = []
-        for row in range(game_matrix_rows):
-            column.append('.')
-        board.append(column)
+    for row in range(game_matrix_rows):
+        new_row = []
+        for column in range(game_matrix_columns):
+            new_row.append('.')
+        board.append(new_row)
     return board
 
-
 run_tetris_game()
-
-
-
