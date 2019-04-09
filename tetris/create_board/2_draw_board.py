@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import QUIT
-BLUE = (  0,   0, 155)
+BLUE = (0, 0, 155)
 BOX_SIZE = 20
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480

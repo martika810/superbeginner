@@ -32,8 +32,8 @@ def run_tetris_game():
         draw_board(screen,game_matrix)
         pygame.display.update()
 
-        if(piece['x']>18 or game_matrix[piece['x']+1][piece['y']]!='.'):
-            game_matrix = update_game_matrix(game_matrix,piece['x'],piece['y'])
+        if(piece['row']>=18 or game_matrix[piece['row']+1][piece['column']]!='.'):
+            game_matrix = update_game_matrix(game_matrix,piece['row'],piece['column'])
             piece = create_piece()
         for event in pygame.event.get(QUIT):
             pygame.quit()
@@ -41,14 +41,15 @@ def run_tetris_game():
 
 def create_piece():
     piece = {}
-    piece['x'] = 0
-    piece['y'] = 4
+    piece['row'] = 0
+    piece['column'] = 4
     return piece
+
 def move_piece_down(piece):
-    piece['x'] = piece['x']+1
+    piece['row'] = piece['row']+1
 
 def draw_piece(screen, piece):
-    draw_single_tetris_box(screen,piece['x'],piece['y'],(255,255,255), (217, 222, 226))
+    draw_single_tetris_box(screen,piece['row'],piece['column'],(255,255,255), (217, 222, 226))
 
 def draw_board(screen,matrix):
     game_matrix_columns = 10
@@ -56,7 +57,7 @@ def draw_board(screen,matrix):
     for row in range(game_matrix_rows):
         for column in range(game_matrix_columns):
             if(matrix[row][column]!='.'):
-                draw_single_tetris_box(screen,column,row,(255,255,255), (217, 222, 226))
+                draw_single_tetris_box(screen,row,column,(255,255,255), (217, 222, 226))
 
 def draw_single_tetris_box(screen, matrix_cell_row, matrix_cell_column,color,shadow_color):
     origin_x = 100 + 5 +(matrix_cell_column*20+1)
@@ -64,10 +65,10 @@ def draw_single_tetris_box(screen, matrix_cell_row, matrix_cell_column,color,sha
     pygame.draw.rect(screen, shadow_color, [origin_x, origin_y, 20, 20])
     pygame.draw.rect(screen, color,[origin_x, origin_y,18,18])
 
-def update_game_matrix(matrix,matrix_cell_column,matrix_cell_row):
+def update_game_matrix(matrix,matrix_cell_row,matrix_cell_column):
     print("matrix_cell_column="+str(matrix_cell_column))
     print("matrix_cell_row="+str(matrix_cell_row))
-    matrix[matrix_cell_column][matrix_cell_row] = 'c'
+    matrix[matrix_cell_row][matrix_cell_column] = 'c'
     return matrix
 
 def create_game_matrix():
