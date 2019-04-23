@@ -1,5 +1,5 @@
 import pygame, sys, time
-from pygame.locals import QUIT
+from pygame.locals import QUIT, KEYDOWN, K_LEFT, K_RIGHT,K_a,K_d
 BLUE = (  0,   0, 155)
 BOX_SIZE = 20
 SCREEN_WIDTH = 640
@@ -13,31 +13,50 @@ def run_tetris_game():
     clock = pygame.time.Clock()
     start= time.time()
     game_matrix = create_game_matrix()
-    last_time_piece_moved = time.time()
+    last_move = start
     piece = create_piece()
     while True:
         screen.fill((  0,   0,   0))
-        if(time.time()-last_time_piece_moved > 1):
-            piece['row'] = piece['row']+1
-            last_time_piece_moved = time.time()
+        if(time.time()-last_move > 0.5):
+            print('Move down')
+            last_move = time.time()
+            move_piece_down(piece)
 
         draw_piece(screen, piece)
         pygame.draw.rect(
             screen,
             BLUE,
-            [100, 50, 10*20, 20*20+10], 5)
+            [100, 50, 10*20+10, 20*20+10], 5)
+
 
         draw_board(screen,game_matrix)
 
-
+        listen_to_user_input(game_matrix, piece)
         if(piece['row']==19 or game_matrix[piece['row']+1][piece['column']]!='.'):
             game_matrix = update_game_matrix(game_matrix,piece['row'],piece['column'])
             piece = create_piece()
-
         pygame.display.update()
         for event in pygame.event.get(QUIT):
             pygame.quit()
             sys.exit()
+
+def listen_to_user_input(game_matrix,piece):
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if (event.key == K_LEFT ) and isValidPosition(game_matrix,piece,adjColumn=-1):
+                piece['column'] -= 1
+            elif (event.key == K_RIGHT ) and isValidPosition(game_matrix,piece,adjColumn=1):
+                piece['column'] += 1
+def isOnBoard(row, column):
+    return column >= 0 and column < 10 and row < 20
+
+def isValidPosition(game_matrix, piece, adjColumn=0, adjRow=0):
+    # Return True if the piece is within the board and not colliding
+    if not isOnBoard(piece['row'] + adjRow, piece['column'] + adjColumn):
+        return False
+    if game_matrix[piece['row'] + adjRow][piece['column'] + adjColumn] != '.':
+        return False
+    return True
 
 def create_piece():
     piece = {}
@@ -66,6 +85,8 @@ def draw_single_tetris_box(screen, matrix_cell_row, matrix_cell_column,color,sha
     pygame.draw.rect(screen, color,[origin_x, origin_y,18,18])
 
 def update_game_matrix(matrix,matrix_cell_row,matrix_cell_column):
+    print("matrix_cell_column="+str(matrix_cell_column))
+    print("matrix_cell_row="+str(matrix_cell_row))
     matrix[matrix_cell_row][matrix_cell_column] = 'c'
     return matrix
 

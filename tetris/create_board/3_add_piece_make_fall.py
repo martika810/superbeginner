@@ -15,10 +15,10 @@ def run_tetris_game():
     piece = create_piece()
     while True:
         screen.fill((  0,   0,   0))
+
         if(time.time()-last_time_piece_moved > 1):
             piece['row'] = piece['row']+1
             last_time_piece_moved = time.time()
-
 
         draw_piece(screen, piece)
         pygame.draw.rect(

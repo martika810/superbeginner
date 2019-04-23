@@ -17,7 +17,7 @@ def run_tetris_game():
         pygame.draw.rect(
             screen,
             BLUE,
-            [100, 50, 10*20, 20*20-10], 5)
+            [100, 50, 10*20, 20*20], 5)
 
         pygame.display.update()
         for event in pygame.event.get(QUIT):
@@ -29,10 +29,10 @@ def create_game_matrix():
     game_matrix_rows = 20
     board = []
     for row in range(game_matrix_rows):
-        column = []
+        new_row = []
         for column in range(game_matrix_columns):
-            column.append('.')
-        board.append(column)
+            new_row.append('.')
+        board.append(new_row)
     return board
 
 run_tetris_game()
