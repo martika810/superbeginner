@@ -27,13 +27,13 @@ def run_tetris_game():
 def create_game_matrix():
     game_matrix_columns = 10
     game_matrix_rows = 20
-    board = []
+    matrix = []
     for row in range(game_matrix_rows):
         new_row = []
         for column in range(game_matrix_columns):
             new_row.append('.')
-        board.append(new_row)
-    return board
+        matrix.append(new_row)
+    return matrix
 
 run_tetris_game()
 

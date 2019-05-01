@@ -11,16 +11,21 @@ def run_tetris_game():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('My Tetris')
     game_matrix = create_game_matrix()
+    ########## NEW #########################
     last_time_piece_moved = time.time()
     piece = create_piece()
+    ########################################
     while True:
         screen.fill((  0,   0,   0))
 
+        ########### MOVE THE PIECE ONE CELL DOWN AFTER 1 SECOND #######
         if(time.time()-last_time_piece_moved > 1):
             piece['row'] = piece['row']+1
             last_time_piece_moved = time.time()
 
+        ############## DISPLAY PIECE IN THE BOARD #####################
         draw_piece(screen, piece)
+        ###############################################################
         pygame.draw.rect(
             screen,
             BLUE,
