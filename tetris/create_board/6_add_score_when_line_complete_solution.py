@@ -46,16 +46,28 @@ def run_tetris_game():
 
 def draw_score(screen, score):
     # draw the score text
-    # TO DO
-    return
+    font = pygame.font.Font('freesansbold.ttf', 18)
+    scoreSurf = font.render('Score: %s' % score, True, (255,255,255))
+    screen.blit(scoreSurf, (640 - 150, 20))
 
 def remove_completed_lines(game_matrix):
     num_lines_removed = 0
-    # TO DO
+    for row in range(20):
+        if(is_line_completed(game_matrix,row)):
+            for row_to_move_down in range(row, 0, -1): # Loop from the completed row to the top row
+                for column in range(10):
+                    game_matrix[row_to_move_down][column] = game_matrix[row_to_move_down-1][column] #Move cell one row down
+            # Set very top line to blank.
+            for x in range(10):
+                game_matrix[0][x] = '.'
+            num_lines_removed += 1
     return num_lines_removed
 
 def is_line_completed(game_matrix, row):
-     # TO DO
+    # Return True if the line filled with boxes with no gaps.
+    for column in range(10):
+        if game_matrix[row][column] == '.':
+            return False
     return True
 
 def listen_to_user_input(game_matrix,piece):

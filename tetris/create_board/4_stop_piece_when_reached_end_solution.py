@@ -1,12 +1,10 @@
 import pygame, sys, time
-from pygame.locals import QUIT, KEYDOWN, K_LEFT, K_RIGHT,K_a,K_d
+from pygame.locals import QUIT
 BLUE = (  0,   0, 155)
 BOX_SIZE = 20
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 BOARD_WIDTH = 10
-score = 0
-# Added removeCompleteLines to remove complete lines and move everything above
 
 def run_tetris_game():
     pygame.init()
@@ -15,7 +13,6 @@ def run_tetris_game():
     game_matrix = create_game_matrix()
     last_time_piece_moved = time.time()
     piece = create_piece()
-    score=0
     while True:
         screen.fill((  0,   0,   0))
         if(time.time()-last_time_piece_moved > 1):
@@ -26,56 +23,20 @@ def run_tetris_game():
         pygame.draw.rect(
             screen,
             BLUE,
-            [100, 50, 10*20+10, 20*20+10], 5)
+            [100, 50, 10*20, 20*20+10], 5)
 
+        ######## DRAW BOARD #######################
         draw_board(screen,game_matrix)
-        draw_score(screen,score)
 
-        listen_to_user_input(game_matrix, piece)
-
+        ####### CHECK IF PIECE REACHES THE END #####
         if(piece['row']==19 or game_matrix[piece['row']+1][piece['column']]!='.'):
             game_matrix[piece['row']][piece['column']] = 'c'
-            lines_removed = remove_completed_lines(game_matrix)
-            score+=lines_removed
             piece = create_piece()
 
         pygame.display.update()
         for event in pygame.event.get(QUIT):
             pygame.quit()
             sys.exit()
-
-def draw_score(screen, score):
-    # draw the score text
-    # TO DO
-    return
-
-def remove_completed_lines(game_matrix):
-    num_lines_removed = 0
-    # TO DO
-    return num_lines_removed
-
-def is_line_completed(game_matrix, row):
-     # TO DO
-    return True
-
-def listen_to_user_input(game_matrix,piece):
-    for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if (event.key == K_LEFT ) and isValidPosition(game_matrix,piece,adjColumn=-1):
-                piece['column'] -= 1
-            elif (event.key == K_RIGHT ) and isValidPosition(game_matrix,piece,adjColumn=1):
-                piece['column'] += 1
-
-def isOnBoard(row, column):
-    return column >= 0 and column < 10 and row < 20
-
-def isValidPosition(game_matrix, piece, adjColumn=0, adjRow=0):
-    # Return True if the piece is within the board and not colliding
-    if not isOnBoard(piece['row'] + adjRow, piece['column'] + adjColumn):
-        return False
-    if game_matrix[piece['row'] + adjRow][piece['column'] + adjColumn] != '.':
-        return False
-    return True
 
 def create_piece():
     piece = {}
