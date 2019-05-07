@@ -68,24 +68,20 @@ def run_tetris_game():
 
 def create_piece():
     piece = {}
-    random_shape = random.choice(list(pieces_dict().keys()))
-    piece['shape'] = random_shape
+    # TODO Pick a piece randomly and assign it to the moving piece
     piece['column'] = 2  # update from 4
     piece['row'] = 0
     return piece
 
 def draw_moving_piece(screen, piece):
-    shape_to_draw = pieces_dict()[piece['shape']][0]
-    for row in range(5):
-        for col in range(5):
-            if shape_to_draw[row][col] !='.':
-                draw_single_tetris_box(screen,piece['row']+row,piece['column']+col,(255,255,255), (217, 222, 226))
+    # Note:
+    # TODO Get the piece matrix to draw
+    # TODO Loop over each cell and draw a block if necessary
+    # draw_single_tetris_box(screen,piece['row']+row,piece['column']+col,(255,255,255), (217, 222, 226))
+    return
 
 def update_game_matrix(matrix, piece):
-    for row in range(5):
-        for col in range(5):
-            if(pieces_dict()[piece['shape']][0][row][col] != '.'):
-                matrix[piece['row']+row][piece['column']+col] = 'c'
+    # TODO Loop over each cell in the piece matrix updating the game matrix when necessary
     return matrix
 
 def draw_score(screen, score):
@@ -129,7 +125,7 @@ def isValidPosition(game_matrix, piece, adjColumn=0, adjRow=0):
     # Return True if the piece is within the board and not colliding
     for row in range(5):
         for col in range(5):
-            if pieces_dict()[piece['shape']][0][row][col] == '.':
+            if pieces_dict()[piece['shape']][piece['rotation']][row][col] == '.':
                 continue
             if not isOnBoard(piece['row']+ row + adjRow, piece['column']+ col + adjColumn):
                 return False

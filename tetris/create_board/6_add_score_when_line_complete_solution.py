@@ -18,7 +18,7 @@ def run_tetris_game():
     score=0
     while True:
         screen.fill((  0,   0,   0))
-        if(time.time()-last_time_piece_moved > 1):
+        if(time.time()-last_time_piece_moved > 0.1):
             piece['row'] = piece['row']+1
             last_time_piece_moved = time.time()
 
@@ -73,19 +73,16 @@ def is_line_completed(game_matrix, row):
 def listen_to_user_input(game_matrix,piece):
     for event in pygame.event.get():
         if event.type == KEYDOWN:
-            if (event.key == K_LEFT ) and isValidPosition(game_matrix,piece,adjColumn=-1):
+            if (event.key == K_LEFT ) and isValidPosition(game_matrix,piece['row'],piece['column']-1):
                 piece['column'] -= 1
-            elif (event.key == K_RIGHT ) and isValidPosition(game_matrix,piece,adjColumn=1):
+            elif (event.key == K_RIGHT ) and isValidPosition(game_matrix,piece['row'],piece['column']+1):
                 piece['column'] += 1
 
-def isOnBoard(row, column):
-    return column >= 0 and column < 10 and row < 20
+def isValidPosition(game_matrix, row, column):
 
-def isValidPosition(game_matrix, piece, adjColumn=0, adjRow=0):
-    # Return True if the piece is within the board and not colliding
-    if not isOnBoard(piece['row'] + adjRow, piece['column'] + adjColumn):
+    if not(column >= 0 and column < 10 and row < 20): # Check piece is within board boundaries
         return False
-    if game_matrix[piece['row'] + adjRow][piece['column'] + adjColumn] != '.':
+    if game_matrix[row][column] != '.': # Check if piece is empty
         return False
     return True
 
